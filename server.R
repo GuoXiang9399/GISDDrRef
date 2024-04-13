@@ -12,7 +12,7 @@
   function(input, output, session) {  
     # data input
     datasetInput <- function() {  
-      read_excel("GISDDref.xlsx")  
+      read_excel("GISDDrRef.xlsx")  
     }  
     filteredData <- reactive({  
       data <- datasetInput()  
@@ -67,7 +67,7 @@
         scale_y_continuous(expand = c(0,0))+
         theme_classic()+  
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=90))
+              axis.text.x = element_text(angle=30,size=9))
     })
     #Output the plot  
     output$Plot2 <- renderPlot({  
@@ -81,7 +81,7 @@
                  color="black",linewidth=0.50,width=0.7) +  
         scale_y_continuous(expand = c(0,0))+
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=90))
+              axis.text.x = element_text(angle=30,size=9))
     })
     #Output the plot  
     output$Plot3 <- renderPlot({  
@@ -95,7 +95,8 @@
                      fill=Pub_Journal),
                  color="black", linewidth=0.50,width=0.7) +  
         scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=1)))+
-        theme(legend.position = "none")
+        theme(legend.position = "none",
+              axis.text.x.bottom = element_text(size=8))
     })
     #Output the plot  
     output$Plot4 <- renderPlot({  
@@ -108,9 +109,10 @@
         geom_col(aes(x = Number,y = reorder(Pub_First_affiliation, Number),
                      fill = Pub_First_affiliation),
                  color="black",linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=1)))+
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 6.5))
+              axis.text.y = element_text(size = 6.5),
+              axis.text.x.bottom = element_text(size=8))
     })
     #Download handler for the filtered data  
     output$downloadData <- downloadHandler(  

@@ -38,24 +38,24 @@
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot1", height = 220)),
+                      imageOutput("Plot1", height = 250)),
                   box(title = "Epi_Country",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot2", height = 220))
+                      imageOutput("Plot2", height = 250))
                   ),
                 fluidRow(
                   box(title = "Journal",  
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot3", height = 350)),
+                      imageOutput("Plot3", height = 380)),
                   box(title = "Affiliation",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot4", height = 350))
+                      imageOutput("Plot4", height = 380))
                   )
                 ),
         tabItem(tabName = "Data",
