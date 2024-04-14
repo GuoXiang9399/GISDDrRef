@@ -94,7 +94,8 @@
         geom_col(aes(x = Number,y = reorder(Pub_Journal, Number),
                      fill=Pub_Journal),
                  color="black", linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=1)))+
+        scale_x_continuous(expand = c(0,0),#limits = c(0,10),
+                           breaks = c(seq(0,1000,by=1)))+
         theme(legend.position = "none",
               axis.text.x.bottom = element_text(size=8))
     })
