@@ -18,7 +18,8 @@
     dashboardSidebar(
       sidebarMenu(
       menuItem("Summary", tabName = "Summary", icon = icon("dashboard")),
-      menuItem("Data", tabName = "Data",icon = icon("th"), badgeColor = "green"),
+      menuItem("Epide in China", tabName = "EpideinChina", icon = icon("dashboard")),
+      menuItem("Data", tabName = "Data",icon = icon("th")),
       menuItem("About", tabName = "About", icon = icon("cube"))  
       )
     ),
@@ -58,6 +59,37 @@
                       imageOutput("Plot4", height = 380))
                   )
                 ),
+        tabItem(tabName = "EpideinChina",
+                h2("GISDDrRef"),
+                fluidRow(
+                  infoBox("Pubed paper", 355, icon = icon("credit-card")),
+                  infoBox("Joual", 122, icon = icon("credit-card"))
+                  ),
+                fluidRow(
+                  box(title = "Year of Publish",  
+                      #background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("PlotCN1", height = 250)),
+                  box(title = "Epi_Country",
+                      #background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("PlotCN2", height = 250))
+                  ),
+                fluidRow(
+                  box(title = "Journal",  
+                      #background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("PlotCN3", height = 380)),
+                  box(title = "Affiliation",
+                      #background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("PlotCN4", height = 380))
+                )
+        ),
         tabItem(tabName = "Data",
                 selectInput("Epi_Country", "Choose a target:",
                           c("All","China")),

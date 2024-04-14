@@ -115,6 +115,78 @@
               axis.text.y = element_text(size = 6.5),
               axis.text.x.bottom = element_text(size=8))
     })
+    #Output the plot  
+    output$PlotCN1 <- renderPlot({  
+      data <- datasetInput()  
+      data <- subset(data, Epi_Country=="China")
+      data <- subset(data, Epi_Province!="NA")
+      data_summary <- data %>%
+        unite(Epi_Province,Pub_Year_of_publish, col="Abc",sep="%%%") %>%
+        group_by(Abc) %>%  
+        summarise(Number=n(), .groups = 'drop') %>% # 加上.groups = 'drop'以避免警告  
+        separate(Abc,into=c("Epi_Province","Pub_Year_of_publish"),sep="%%%")
+      # 使用ggplot2创建柱状图  
+      ggplot(data_summary, aes(x = Pub_Year_of_publish, y = Epi_Province)) +  
+        geom_point(aes(size=Number,color=Epi_Province) )+
+        #geom_col(color="black", fill="#9BD5E7", linewidth=0.50,width=0.7) +  
+        xlab("") +  
+        ylab("Number of papers") +  
+        #scale_x_continuous(breaks = seq(1900, 2100, by = 2)) +  
+        #scale_y_continuous(expand = c(0,0))+
+        theme_bw()+  
+        theme(legend.position = "none",
+              axis.text.x = element_text(angle=30,size=9))
+    })
+    #Output the plot  
+    output$PlotCN2 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="China")
+      data <- subset(data, Epi_City!="NA")
+      data <- group_by(data,Epi_City) %>%
+        summarise(Number=n())
+      ggplot(data) +  
+        theme_classic() + xlab("") + ylab("Number of paper") +
+        geom_col(aes(x = reorder(Epi_City,-Number),y = Number,
+                     fill = Epi_City),
+                 color="black",linewidth=0.50,width=0.7) +  
+        scale_y_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=5)))+
+        theme(legend.position = "none",
+              axis.text.x = element_text(angle=30,size=9))
+    })
+    #Output the plot  
+    output$PlotCN3 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="China")
+      data <- group_by(data, Pub_Journal) %>%
+        summarise(Number=n())
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of paper")+
+        geom_col(aes(x = Number,y = reorder(Pub_Journal, Number),
+                     fill=Pub_Journal),
+                 color="black", linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),#limits = c(0,10),
+                           breaks = c(seq(0,1000,by=1)))+
+        theme(legend.position = "none",
+              axis.text.x.bottom = element_text(size=8))
+    })
+    #Output the plot  
+    output$PlotCN4 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="China")
+      data <- group_by(data, Pub_First_affiliation) %>%
+        summarise(Number=n())
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of paper")+
+        geom_col(aes(x = Number,y = reorder(Pub_First_affiliation, Number),
+                     fill = Pub_First_affiliation),
+                 color="black",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 8),
+              axis.text.x.bottom = element_text(size=8))
+    })
     #Download handler for the filtered data  
     output$downloadData <- downloadHandler(  
       filename = function() {  
