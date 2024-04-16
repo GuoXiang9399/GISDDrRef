@@ -39,24 +39,24 @@
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot1", height = 250)),
+                      imageOutput("Plot1", height = 280)),
                   box(title = "Epi_Country",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot2", height = 250))
+                      imageOutput("Plot2", height = 280))
                   ),
                 fluidRow(
                   box(title = "Journal",  
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot3", height = 380)),
+                      imageOutput("Plot3", height = 420)),
                   box(title = "Affiliation",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot4", height = 380))
+                      imageOutput("Plot4", height = 420))
                   )
                 ),
         tabItem(tabName = "EpideinChina",
@@ -66,28 +66,28 @@
                   infoBox("Joual", 122, icon = icon("credit-card"))
                   ),
                 fluidRow(
-                  box(title = "Year of Publish",  
+                  box(title = "各省相关文章发表年份",  
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN1", height = 250)),
-                  box(title = "Epi_Country",
+                      imageOutput("PlotCN1", height = 320)),
+                  box(title = "研究城市",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN2", height = 250))
+                      imageOutput("PlotCN2", height = 320))
                   ),
                 fluidRow(
-                  box(title = "Journal",  
+                  box(title = "发表期刊",  
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN3", height = 380)),
-                  box(title = "Affiliation",
+                      imageOutput("PlotCN3", height = 550)),
+                  box(title = "研究机构",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN4", height = 380))
+                      imageOutput("PlotCN4", height = 550))
                 )
         ),
         tabItem(tabName = "Data",
