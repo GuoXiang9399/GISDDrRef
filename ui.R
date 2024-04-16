@@ -8,6 +8,7 @@
   library(tidyr)
   library(DT)
   library(ggplot2)
+  library(viridis)
 ###############################################################################
 # Define UI for application that draws a histogram
   dashboardPage(
@@ -51,12 +52,12 @@
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot3", height = 420)),
+                      imageOutput("Plot3", height = 450)),
                   box(title = "Affiliation",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot4", height = 420))
+                      imageOutput("Plot4", height = 450))
                   )
                 ),
         tabItem(tabName = "EpideinChina",
@@ -70,31 +71,34 @@
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN1", height = 320)),
+                      imageOutput("PlotCN1", height = 350)),
                   box(title = "研究城市",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN2", height = 320))
+                      imageOutput("PlotCN2", height = 350))
                   ),
                 fluidRow(
                   box(title = "发表期刊",  
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN3", height = 550)),
+                      imageOutput("PlotCN3", height = 750)),
                   box(title = "研究机构",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN4", height = 550))
+                      imageOutput("PlotCN4", height = 750))
                 )
         ),
         tabItem(tabName = "Data",
-                selectInput("Epi_Country", "Choose a target:",
-                          c("All","China")),
-                selectInput("Pub_Journal", "Choose a target:",
-                            c("All","Frontiers in Public Health")),
+                selectInput("Epi_Country", "Choose a country/area:",
+                          c("All","China","Vietnam","Thailand","Myanmar")),
+                selectInput("Pub_Affiliation", "Choose a affiliation:",
+                            c("All",
+                              "Chinese Center for Disease Control and Prevention",
+                              "Guangdong Provincial Center for Disease Control and Prevention",
+                              "Guangzhou Center for Disease Control and Prevention")),
                 fluidRow(
                   column(width = 12, status = "info", solidHeader = TRUE,
                          box(dataTableOutput("table"), width = NULL)),
