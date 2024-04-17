@@ -83,12 +83,12 @@
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN3", height = 750)),
+                      imageOutput("PlotCN3", height = 650)),
                   box(title = "研究机构",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN4", height = 750))
+                      imageOutput("PlotCN4", height = 650))
                 )
         ),
         tabItem(tabName = "Data",
