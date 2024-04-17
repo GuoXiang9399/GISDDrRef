@@ -135,9 +135,9 @@
         theme_bw()+  
         scale_y_discrete(limits=c(
           "北京","河北",
-          "陕西","香港","湖北","贵州","安徽",
-          "江苏","上海","山东","澳门","广西",
-          "湖南","江西","河南","海南","台湾",
+          "湖北","贵州","安徽","陕西","上海",
+          "香港","山东","湖南","江西","江苏",
+          "澳门","河南","广西","海南","台湾",
           "福建","云南","浙江","广东","全国范围"
           ))+
         scale_fill_viridis(discrete = T)+
@@ -160,7 +160,7 @@
         scale_y_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=3)))+
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=30,size=10))
+              axis.text.x = element_text(angle=90,size=10))
     })
     #Output the plot  
     output$PlotCN3 <- renderPlot({  
@@ -180,6 +180,7 @@
                            breaks = c(seq(0,1000,by=1)))+
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
+              axis.ticks.y = element_blank(),
               axis.text.y = element_text(size = 12),
               axis.text.x.bottom = element_text(size=8))
     })
