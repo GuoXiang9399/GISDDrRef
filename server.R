@@ -168,6 +168,7 @@
       data <- subset(data, Epi_Country=="China")
       data <- subset(data, Pub_Journal!="NA")
       data <- group_by(data, Pub_Journal) %>% summarise(Number=n())
+      data <- subset(data, Number > 1)
       ggplot(data,aes(x = Number,y = reorder(Pub_Journal, Number),
                       fill=Pub_Journal)) +  
         theme_classic() +  
@@ -189,6 +190,7 @@
       data <- subset(data, Epi_Country=="China")
       data <- subset(data, Pub_AffiliationCN!="NA")
       data <- group_by(data, Pub_AffiliationCN) %>% summarise(Number=n())
+      data <- subset(data, Number > 1)
       ggplot(data) +  
         theme_classic() +  
         ylab("")+xlab("Number of paper")+

@@ -67,28 +67,28 @@
                   infoBox("Joual", 122, icon = icon("credit-card"))
                   ),
                 fluidRow(
-                  box(title = "各省相关文章发表年份",  
+                  box(title = "省级范围研究发表",  
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("PlotCN1", height = 350)),
-                  box(title = "研究城市",
+                  box(title = "研究范围/城市",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("PlotCN2", height = 350))
                   ),
                 fluidRow(
-                  box(title = "发表期刊",  
+                  box(title = "值得关注的专业期刊",  
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN3", height = 650)),
-                  box(title = "研究机构",
+                      imageOutput("PlotCN3", height = 500)),
+                  box(title = "值得关注的研究机构",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotCN4", height = 650))
+                      imageOutput("PlotCN4", height = 500))
                 )
         ),
         tabItem(tabName = "Data",
