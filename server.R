@@ -90,6 +90,7 @@
       data <- subset(data, Pub_Journal!="NA")
       data <- group_by(data, Pub_Journal) %>%
         summarise(Number=n())
+      data <- subset(data, Number > 1)
       ggplot(data) +  
         theme_classic() +  
         ylab("")+xlab("Number of paper")+
@@ -107,6 +108,7 @@
       data <- subset(data, Pub_Affiliation!="NA")
       data <- group_by(data, Pub_Affiliation) %>%
         summarise(Number=n())
+      data <- subset(data, Number > 1)
       ggplot(data) +  
         theme_classic() +  
         ylab("")+xlab("Number of paper")+
@@ -149,11 +151,12 @@
     output$PlotCN2 <- renderPlot({  
       data <- datasetInput()
       data <- subset(data, Epi_Country=="China")
-      data <- subset(data, Epi_CityCN!="NA")
+      data <- subset(data, Epi_CityCN!="NA" & Epi_CityCN!="省级范围" )
       data <- group_by(data,Epi_CityCN) %>%
         summarise(Number=n())
+      data <- subset(data, Number > 1)
       ggplot(data) +  
-        theme_classic() + xlab("") + ylab("Number of paper") +
+        theme_classic() + xlab("") + ylab("Number of involved paper") +
         geom_col(aes(x = reorder(Epi_CityCN,-Number),y = Number,
                      fill = Epi_CityCN),
                  color="black",linewidth=0.50,width=0.7) +  
@@ -168,11 +171,11 @@
       data <- subset(data, Epi_Country=="China")
       data <- subset(data, Pub_Journal!="NA")
       data <- group_by(data, Pub_Journal) %>% summarise(Number=n())
-      data <- subset(data, Number > 1)
+      data <- subset(data, Number > 2)
       ggplot(data,aes(x = Number,y = reorder(Pub_Journal, Number),
                       fill=Pub_Journal)) +  
         theme_classic() +  
-        ylab("")+xlab("Number of paper")+
+        ylab("")+xlab("Number of involved paper")+
         geom_segment(aes(yend=reorder(Pub_Journal, Number)),xend=0)+
         geom_point(aes(size=Number),
                    color="black", shape=21,linewidth=0.50,width=0.7) +  
@@ -190,10 +193,10 @@
       data <- subset(data, Epi_Country=="China")
       data <- subset(data, Pub_AffiliationCN!="NA")
       data <- group_by(data, Pub_AffiliationCN) %>% summarise(Number=n())
-      data <- subset(data, Number > 1)
+      data <- subset(data, Number > 2)
       ggplot(data) +  
         theme_classic() +  
-        ylab("")+xlab("Number of paper")+
+        ylab("")+xlab("Number of involved paper")+
         geom_col(aes(x = Number,y = reorder(Pub_AffiliationCN, Number),
                      fill = Pub_AffiliationCN),
                  color="black",linewidth=0.50,width=0.7) +  
