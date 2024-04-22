@@ -51,12 +51,12 @@
                       imageOutput("Plot2", height = 280))
                   ),
                 fluidRow(
-                  box(title = "TOP Journals",  
+                  box(title = "TOP Affiliations",  
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("Plot3", height = 320)),
-                  box(title = "TOP Affiliations",
+                  box(title = "TOP Journals",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,

@@ -185,7 +185,7 @@
       data <- left_join(data,location,by="Epi_Country")
       ggplot(world,aes(long,lat))+theme_void()+coord_equal()+
         geom_map(map=world,aes(map_id=region),
-                 fill="White", color=NA,size=0.0)+
+                 fill="#E0F2F7", color=NA,size=0.0)+
         geom_point(data=data,aes(x=long,y=lat,size=Number),
                    alpha=0.98,stroke=0.1,shape=21,
                    color="black",fill="#D58482")+
@@ -195,10 +195,10 @@
               axis.text = element_blank(),
               axis.title = element_blank(),
               legend.position="none",
-              panel.border = element_rect(size=0.1,fill=NA),
+              panel.border = element_blank(),
               panel.grid = element_blank(),
               panel.spacing = element_blank(),
-              panel.background=element_rect(fill="#E0F2F7"))+
+              panel.background=element_blank())+
         scale_x_continuous(expand = c(0,0))+
         scale_y_continuous(expand = c(0,0))+
         guides(fill=guide_legend(title = NULL,nrow=1))
@@ -206,10 +206,29 @@
     #Output the plot  
     output$Plot3 <- renderPlot({  
       data <- datasetInput()
+      data <- subset(data, Pub_Affiliation!="NA")
+      data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
+        group_by(Abc) %>% summarise(Number=n()) %>%
+        separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
+      data <- subset(data, Number > 3)
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
+                     fill = Pub_Affiliation_location),
+                 color="black",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 10.0),
+              axis.text.x.bottom = element_text(size=8))
+    })
+    #Output the plot  
+    output$Plot4 <- renderPlot({  
+      data <- datasetInput()
       data <- subset(data, Pub_Journal!="NA")
       data <- group_by(data, Pub_Journal) %>%
         summarise(Number=n())
-      data <- subset(data, Number > 4)
+      data <- subset(data, Number > 5)
       ggplot(data) +  
         theme_classic() +  
         ylab("")+xlab("Number of involved paper")+
@@ -219,25 +238,7 @@
         scale_x_continuous(expand = c(0,0),#limits = c(0,10),
                            breaks = c(seq(0,1000,by=2)))+
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 9.0),
-              axis.text.x.bottom = element_text(size=8))
-    })
-    #Output the plot  
-    output$Plot4 <- renderPlot({  
-      data <- datasetInput()
-      data <- subset(data, Pub_Affiliation!="NA")
-      data <- group_by(data, Pub_Affiliation) %>%
-        summarise(Number=n())
-      data <- subset(data, Number > 3)
-      ggplot(data) +  
-        theme_classic() +  
-        ylab("")+xlab("Number of involved paper")+
-        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
-                     fill = Pub_Affiliation),
-                 color="black",linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
-        theme(legend.position = "none",
-              axis.text.y = element_text(size = 8.0),
+              axis.text.y = element_text(size = 10.0),
               axis.text.x.bottom = element_text(size=8))
     })
     #Output the plot
