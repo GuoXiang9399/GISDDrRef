@@ -29,11 +29,14 @@
         tabItem(tabName = "Summary",
                 h2("GISDDrRef"),
                 fluidRow(
-                  infoBox("Published paper", 348, icon = icon("credit-card")),
-                  infoBox("Involved Journal", 128, icon = icon("credit-card")),
-                  infoBox("Involved Affiliation", 155, icon = icon("credit-card")),
-                  infoBoxOutput("progressBox"),
-                  infoBoxOutput("HH2")
+                  infoBoxOutput("studyBox"),
+                  infoBoxOutput("journalBox"),
+                  infoBoxOutput("affiliationBox")
+                  ),
+                fluidRow(
+                  infoBoxOutput("EpideBox"),
+                  infoBoxOutput("MoleBox"),
+                  infoBoxOutput("CliniBox")
                   ),
                 fluidRow(
                   box(title = "Year of Publish",  
@@ -41,31 +44,31 @@
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("Plot1", height = 280)),
-                  box(title = "Epi_Country",
+                  box(title = "Country/area Report",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("Plot2", height = 280))
                   ),
                 fluidRow(
-                  box(title = "Journal",  
+                  box(title = "TOP Journals",  
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot3", height = 450)),
-                  box(title = "Affiliation",
+                      imageOutput("Plot3", height = 320)),
+                  box(title = "TOP Affiliations",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot4", height = 450))
+                      imageOutput("Plot4", height = 320))
                   )
                 ),
         tabItem(tabName = "EpideinChina",
                 h2("GISDDrRef"),
                 fluidRow(
-                  infoBox("Published paper", 348, icon = icon("credit-card")),
-                  infoBox("Involved Journal", 128, icon = icon("credit-card")),
-                  infoBox("Involved Affiliation", 155, icon = icon("credit-card"))
+                  infoBoxOutput("studyBoxCN"),
+                  infoBoxOutput("journalBoxCN"),
+                  infoBoxOutput("affiliationBoxCN")
                 ),
                 fluidRow(
                   box(title = "省级范围研究发表",  
@@ -115,9 +118,8 @@
                   )
                 ),
         tabItem(tabName = "About",
-                h2("GISDDrlearn"),
-                h5("Our study has established a reproduceable and comparable global genotyping framework of DENV with contextualizing spatiotemporal epidemiological information before. The defned framework was discriminated with three hierarchical layers of genotype, subgenotype and clade with respective mean pairwise distances 2–6%, 0.8–2%, and ≤0.8%. This framework reveals that the persisting traditional endemic sourcing, the emerging epidemic difusing, and the probably hidden epidemics are the crucial drivers of the rapid global spread of dengue. "),
-                h5("GISDDrlearn is a easy-used R Shiny app for assigning DENV sequences to serotype, genotype, subgenotype, and clade based on Random Forest method. As one of the import machine learning model, random forest is an ensemble of secision trees, each built using a subset of the training sample. The structural from show a interesting connection between Random Forest and evolution tree.")
+                h2("GISDDrRef"),
+                h5("Our study has established a reproduceable and comparable global genotyping framework of DENV with contextualizing spatiotemporal epidemiological information before. The defned framework was discriminated with three hierarchical layers of genotype, subgenotype and clade with respective mean pairwise distances 2–6%, 0.8–2%, and ≤0.8%. This framework reveals that the persisting traditional endemic sourcing, the emerging epidemic difusing, and the probably hidden epidemics are the crucial drivers of the rapid global spread of dengue. ")
                 )
       )
     )

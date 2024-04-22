@@ -6,6 +6,7 @@
   library(readxl)
   library(dplyr)
   library(tidyr)
+  library(maps)
   library(DT)
   library(ggplot2)
   library(viridis)
@@ -25,6 +26,10 @@
       }  
       return(data)  
     })
+    # data input
+    locationInput <- function() {  
+      read_excel("data/Loca.GPS.xlsx")  
+    }  
     # Output the filtered data as a table  
     output$table <- renderDataTable({  
       data <- filteredData()  
@@ -51,7 +56,105 @@
                   )
                 )  
     }, server = FALSE)
-    
+    ###########################################################################
+    #
+    output$studyBox <- renderInfoBox({
+      data <- datasetInput()
+      infoBox(
+        "Involved study", paste0(
+          length(data$Pub_Title)  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    #
+    output$journalBox <- renderInfoBox({
+      data <- datasetInput()
+      infoBox(
+        "Involved journal", paste0(
+          length(unique(data$Pub_Journal))  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    #
+    output$affiliationBox <- renderInfoBox({
+      data <- datasetInput()
+      infoBox(
+        "Involved affiliation", paste0(
+          length(unique(data$Pub_Affiliation))  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    #
+    output$EpideBox <- renderInfoBox({
+      data <- datasetInput()
+      data <- subset(data, Type_Epide=="T")
+      infoBox(
+        "Epidemological study", paste0(
+          length(data$Pub_Title)  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    #
+    output$MoleBox <- renderInfoBox({
+      data <- datasetInput()
+      data <- subset(data, Type_Mole=="T")
+      infoBox(
+        "Molecular study", paste0(
+          length(data$Pub_Title)  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    #
+    output$CliniBox <- renderInfoBox({
+      data <- datasetInput()
+      data <- subset(data, Type_Clini=="T")
+      infoBox(
+        "Clinical analysis", paste0(
+          length(data$Pub_Title)  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    ###########################################################################
+    #
+    output$studyBoxCN <- renderInfoBox({
+      data <- datasetInput()
+      data <- subset(data,Pub_AffiliationCN!="NA")
+      infoBox(
+        "Involved study", paste0(
+          length(data$Pub_Title)  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    #
+    output$journalBoxCN <- renderInfoBox({
+      data <- datasetInput()
+      data <- subset(data,Pub_AffiliationCN!="NA")
+      infoBox(
+        "Involved journal", paste0(
+          length(unique(data$Pub_Journal))  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    #
+    output$affiliationBoxCN <- renderInfoBox({
+      data <- datasetInput()
+      data <- subset(data,Pub_AffiliationCN!="NA")
+      infoBox(
+        "Involved affiliation", paste0(
+          length(unique(data$Pub_Affiliation))  
+        ), icon = icon("list"),
+        color = "purple"
+      )
+    })
+    ###########################################################################
     #Output the plot  
     output$Plot1 <- renderPlot({  
       data <- datasetInput()  
@@ -63,26 +166,42 @@
       ggplot(data_summary, aes(x = Pub_Publish_year, y = Number)) +  
         geom_col(color="black", fill="#9BD5E7", linewidth=0.50,width=0.7) +  
         xlab("") +  
-        ylab("Number of papers") +  
+        ylab("Number of involved papers") +  
         scale_x_continuous(breaks = seq(1900, 2100, by = 2)) +  
         scale_y_continuous(expand = c(0,0))+
         theme_classic()+  
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=30,size=9))
+              axis.text.x = element_text(angle=30,size=9),
+              axis.text.y = element_text(size=10))
     })
     #Output the plot  
     output$Plot2 <- renderPlot({  
       data <- datasetInput()
+      world <- map_data('world')
       data <- group_by(data,Epi_Country) %>%
         summarise(Number=n())
-      ggplot(data) +  
-        theme_classic() + xlab("") + ylab("Number of paper") +
-        geom_col(aes(x = reorder(Epi_Country,-Number),y = Number,
-                     fill = Epi_Country),
-                 color="black",linewidth=0.50,width=0.7) +  
+      location <- locationInput()
+      names(location) <- c("Epi_Country","lat","long") 
+      data <- left_join(data,location,by="Epi_Country")
+      ggplot(world,aes(long,lat))+theme_void()+coord_equal()+
+        geom_map(map=world,aes(map_id=region),
+                 fill="White", color=NA,size=0.0)+
+        geom_point(data=data,aes(x=long,y=lat,size=Number),
+                   alpha=0.98,stroke=0.1,shape=21,
+                   color="black",fill="#D58482")+
+        theme(plot.background = element_blank(),
+              axis.line = element_blank(),
+              axis.ticks = element_blank(),
+              axis.text = element_blank(),
+              axis.title = element_blank(),
+              legend.position="none",
+              panel.border = element_rect(size=0.1,fill=NA),
+              panel.grid = element_blank(),
+              panel.spacing = element_blank(),
+              panel.background=element_rect(fill="#E0F2F7"))+
+        scale_x_continuous(expand = c(0,0))+
         scale_y_continuous(expand = c(0,0))+
-        theme(legend.position = "none",
-              axis.text.x = element_text(angle=30,size=9))
+        guides(fill=guide_legend(title = NULL,nrow=1))
     })
     #Output the plot  
     output$Plot3 <- renderPlot({  
@@ -90,16 +209,17 @@
       data <- subset(data, Pub_Journal!="NA")
       data <- group_by(data, Pub_Journal) %>%
         summarise(Number=n())
-      data <- subset(data, Number > 1)
+      data <- subset(data, Number > 4)
       ggplot(data) +  
         theme_classic() +  
-        ylab("")+xlab("Number of paper")+
+        ylab("")+xlab("Number of involved paper")+
         geom_col(aes(x = Number,y = reorder(Pub_Journal, Number),
                      fill=Pub_Journal),
                  color="black", linewidth=0.50,width=0.7) +  
         scale_x_continuous(expand = c(0,0),#limits = c(0,10),
-                           breaks = c(seq(0,1000,by=1)))+
+                           breaks = c(seq(0,1000,by=2)))+
         theme(legend.position = "none",
+              axis.text.y = element_text(size = 9.0),
               axis.text.x.bottom = element_text(size=8))
     })
     #Output the plot  
@@ -108,18 +228,30 @@
       data <- subset(data, Pub_Affiliation!="NA")
       data <- group_by(data, Pub_Affiliation) %>%
         summarise(Number=n())
-      data <- subset(data, Number > 1)
+      data <- subset(data, Number > 3)
       ggplot(data) +  
         theme_classic() +  
-        ylab("")+xlab("Number of paper")+
+        ylab("")+xlab("Number of involved paper")+
         geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
                      fill = Pub_Affiliation),
                  color="black",linewidth=0.50,width=0.7) +  
         scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 6.5),
+              axis.text.y = element_text(size = 8.0),
               axis.text.x.bottom = element_text(size=8))
     })
+    #Output the plot
+    output$Plot5 <- renderPlot({  
+      data <- datasetInput()
+      data <- group_by(data,Epi_Country) %>%
+        summarise(Number=n())
+      location <- locationInput()
+      names(location) <- c("Epi_Country","lat","long") 
+      data <- left_join(data,location,by="Epi_Country")
+      ggplot(data)+
+        geom_point(aes(x=long,y=lat,size=Number))
+    })
+    ###########################################################################
     #Output the plot  
     output$PlotCN1 <- renderPlot({  
       data <- datasetInput()  
@@ -206,6 +338,7 @@
               axis.text.y = element_text(size = 12),
               axis.text.x.bottom = element_text(size=8))
     })
+    ###########################################################################
     #Download handler for the filtered data  
     output$downloadData <- downloadHandler(  
       filename = function() {  
