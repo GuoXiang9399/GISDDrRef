@@ -61,7 +61,19 @@
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("Plot4", height = 320))
-                  )
+                  ),
+                fluidRow(
+                  box(title = "Study period start - end",  
+                      background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("Plot5", height = 280)),
+                  box(title = "Study period length",
+                      background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("Plot6", height = 280))
+                )
                 ),
         tabItem(tabName = "EpideinChina",
                 h2("GISDDrRef"),
