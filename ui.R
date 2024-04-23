@@ -39,6 +39,18 @@
                   infoBoxOutput("CliniBox")
                   ),
                 fluidRow(
+                  box(title = "TOP Affiliations",  
+                      background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("Plot3", height = 350)),
+                  box(title = "TOP Journals",
+                      background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("Plot4", height = 350))
+                  ),
+                fluidRow(
                   box(title = "Year of Publish",  
                       background = "purple",
                       solidHeader = TRUE,
@@ -49,18 +61,6 @@
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("Plot2", height = 280))
-                  ),
-                fluidRow(
-                  box(title = "TOP Affiliations",  
-                      background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("Plot3", height = 320)),
-                  box(title = "TOP Journals",
-                      background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("Plot4", height = 320))
                   ),
                 fluidRow(
                   box(title = "Study period start - end",  
