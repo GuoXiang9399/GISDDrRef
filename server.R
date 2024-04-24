@@ -168,10 +168,10 @@
         xlab("") +  
         ylab("Number of involved papers") +  
         scale_x_continuous(breaks = seq(1900, 2100, by = 2)) +  
-        scale_y_continuous(expand = c(0,0))+
+        scale_y_continuous(expand = c(0,0),breaks = c(seq(0,2000,by=5)))+
         theme_classic()+  
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=30,size=9),
+              axis.text.x = element_text(angle=30,size=10),
               axis.text.y = element_text(size=10))
     })
     #Output the plot  
@@ -219,8 +219,8 @@
                  color="black",linewidth=0.50,width=0.7) +  
         scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 10.0),
-              axis.text.x.bottom = element_text(size=8))
+              axis.text.y = element_text(size = 12.0),
+              axis.text.x.bottom = element_text(size=10))
     })
     #Output the plot  
     output$Plot4 <- renderPlot({  
@@ -238,8 +238,8 @@
         scale_x_continuous(expand = c(0,0),#limits = c(0,10),
                            breaks = c(seq(0,1000,by=2)))+
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 10.0),
-              axis.text.x.bottom = element_text(size=8))
+              axis.text.y = element_text(size = 12.0),
+              axis.text.x.bottom = element_text(size=10))
     })
     #Output the plot
     output$Plot5 <- renderPlot({  
@@ -262,9 +262,10 @@
           color=Number),linewidth=2.0)+
         xlab("") +  ylab("Study period") +  
         theme_classic()+  
+        scale_y_continuous(breaks = c(seq(1900,2100,by=4)))+
         theme(legend.position = "none",
               axis.text.x = element_text(angle=90,size=9),
-              axis.text.y = element_text(size=10))
+              axis.text.y = element_text(size=12))
     })
     #Output the plot
     output$Plot6 <- renderPlot({  
@@ -283,8 +284,8 @@
         scale_y_continuous(expand = c(0,0),breaks=c(seq(0,1000,by=10)))+
         theme_classic()+  
         theme(legend.position = "none",
-              axis.text.x = element_text(size=9),
-              axis.text.y = element_text(size=10))
+              axis.text.x = element_text(size=10),
+              axis.text.y = element_text(size=12))
     })
     ###########################################################################
     #Output the plot  
@@ -312,7 +313,7 @@
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
               axis.text.x = element_text(angle=30,size=10),
-              axis.text.y = element_text(size=11))
+              axis.text.y = element_text(size=12))
     })
     #Output the plot  
     output$PlotCN2 <- renderPlot({  
@@ -330,7 +331,7 @@
         scale_y_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=3)))+
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=90,size=10))
+              axis.text.x = element_text(angle=90,size=12))
     })
     #Output the plot  
     output$PlotCN3 <- renderPlot({  
@@ -351,8 +352,8 @@
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
               axis.ticks.y = element_blank(),
-              axis.text.y = element_text(size = 12),
-              axis.text.x.bottom = element_text(size=8))
+              axis.text.y = element_text(size = 14),
+              axis.text.x.bottom = element_text(size=10))
     })
     #Output the plot  
     output$PlotCN4 <- renderPlot({  
@@ -370,8 +371,8 @@
         scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 12),
-              axis.text.x.bottom = element_text(size=8))
+              axis.text.y = element_text(size = 14),
+              axis.text.x.bottom = element_text(size=10))
     })
     ###########################################################################
     #Download handler for the filtered data  
