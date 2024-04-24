@@ -43,12 +43,12 @@
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot3", height = 350)),
+                      imageOutput("Plot3", height = 420)),
                   box(title = "TOP Journals",
                       background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot4", height = 350))
+                      imageOutput("Plot4", height = 420))
                   ),
                 fluidRow(
                   box(title = "Year of Publish",  

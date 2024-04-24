@@ -46,7 +46,7 @@
   data <- subset(data, Epi_period>1)
   ggplot(data)+
     geom_segment(aes(
-      x=Epi_during,yend = Epi_Year_end,y=Epi_Year_star,
+      x=Epi_during,xend=Epi_during,yend = Epi_Year_end,y=Epi_Year_star,
       color=Number),linewidth=2.0)+
     xlab("") +  ylab("Study period") +  
     theme_classic()+  

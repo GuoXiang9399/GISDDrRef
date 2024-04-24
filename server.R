@@ -254,10 +254,11 @@
       data$Epi_Year_star <- as.numeric(data$Epi_Year_star)
       data$Epi_Year_end <- as.numeric(data$Epi_Year_end)
       data <- mutate(data, Epi_period = (Epi_Year_end - Epi_Year_star + 1) )
+      data$Epi_period <- as.numeric(data$Epi_period)
       data <- subset(data, Epi_period>1)
       ggplot(data)+
         geom_segment(aes(
-          x=Epi_during,yend = Epi_Year_end,y=Epi_Year_star,
+          x=Epi_during,xend=Epi_during,yend = Epi_Year_end,y=Epi_Year_star,
           color=Number),linewidth=2.0)+
         xlab("") +  ylab("Study period") +  
         theme_classic()+  
@@ -273,13 +274,13 @@
       data <- mutate(data, Epi_period = (Epi_Year_end - Epi_Year_star + 1) )
       data <- group_by(data, Epi_period) %>%
         summarise(Number=n())
-      data <- subset(data, Epi_period>1)
+      #data <- subset(data, Epi_period>1)
       ggplot(data)+
         geom_col(aes(Epi_period,Number),
                  color="black", fill="#9BD5E7", linewidth=0.50,width=0.7)+
         xlab("") +  ylab("Number of involved papers") +  
-        scale_x_continuous(expand = c(0,0),breaks=c(2,seq(0,100,by=10)))+
-        scale_y_continuous(expand = c(0,0),breaks=c(seq(0,100,by=1)))+
+        scale_x_continuous(expand = c(0,0),breaks=c(seq(1,10,by=1),seq(0,100,by=10)))+
+        scale_y_continuous(expand = c(0,0),breaks=c(seq(0,1000,by=10)))+
         theme_classic()+  
         theme(legend.position = "none",
               axis.text.x = element_text(size=9),
