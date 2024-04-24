@@ -279,7 +279,7 @@
         geom_col(aes(Epi_period,Number),
                  color="black", fill="#9BD5E7", linewidth=0.50,width=0.7)+
         xlab("") +  ylab("Number of involved papers") +  
-        scale_x_continuous(expand = c(0,0),breaks=c(seq(1,10,by=1),seq(0,100,by=10)))+
+        scale_x_continuous(expand = c(0,0),breaks=c(seq(1,10,by=1),seq(0,100,by=5)))+
         scale_y_continuous(expand = c(0,0),breaks=c(seq(0,1000,by=10)))+
         theme_classic()+  
         theme(legend.position = "none",
