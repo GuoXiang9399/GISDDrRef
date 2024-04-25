@@ -51,6 +51,18 @@
                       imageOutput("Plot4", height = 420))
                   ),
                 fluidRow(
+                  box(title = "TOP Authors",  
+                      background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("Plot7", height = 280)),
+                  box(title = "Authors net",
+                      background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("Plot8", height = 280))
+                 ),
+                fluidRow(
                   box(title = "Year of Publish",  
                       background = "purple",
                       solidHeader = TRUE,
@@ -73,7 +85,7 @@
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("Plot6", height = 280))
-                )
+                 )
                 ),
         tabItem(tabName = "EpideinChina",
                 h2("GISDDrRef"),

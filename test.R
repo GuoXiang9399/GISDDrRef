@@ -32,6 +32,7 @@
     theme(legend.position = "none",
           axis.text.x = element_text(size=9),
           axis.text.y = element_text(size=10))
+###############################################################################
 #data
   data$Epi_Year_star <- as.numeric(data$Epi_Year_star)
   data$Epi_Year_end <- as.numeric(data$Epi_Year_end)
@@ -53,6 +54,17 @@
     theme(legend.position = "none",
           axis.text.x = element_text(angle=90,size=9),
           axis.text.y = element_text(size=10))
-  
+###############################################################################
+#authro
+  data <- data[,c("Pub_CorAuthor1",
+                        "Pub_CorAuthor2",
+                        "Pub_CorAuthor3",
+                        "Pub_CorAuthor4",
+                        "Pub_CorAuthor5")]
+  data <- pivot_longer(data,cols = c(1:5),
+                       names_to = "Label",
+                       values_to = "Author")
+  data <- group_by(data,Author) %>% summarise(Number=n())
+  data <- subset(data,Author!="NA")
   
   

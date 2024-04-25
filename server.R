@@ -287,6 +287,55 @@
               axis.text.x = element_text(size=10),
               axis.text.y = element_text(size=12))
     })
+    #Output the plot
+    output$Plot7 <- renderPlot({  
+      data <- datasetInput()
+      data <- data[,c("Pub_CorAuthor1",
+                      "Pub_CorAuthor2",
+                      "Pub_CorAuthor3",
+                      "Pub_CorAuthor4",
+                      "Pub_CorAuthor5")]
+      data <- pivot_longer(data,cols = c(1:5),
+                           names_to = "Label",
+                           values_to = "Author")
+      data <- group_by(data,Author) %>% summarise(Number=n())
+      data <- subset(data,Author!="NA")
+      data <- subset(data, Number>1)
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_col(aes(x = Number,y = reorder(Author, Number),
+                     fill = Author),
+                 color="black",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 12.0),
+              axis.text.x.bottom = element_text(size=10))
+    })
+    #Output the plot
+    output$Plot8 <- renderPlot({  
+      data <- datasetInput()
+      data <- data[,c("Pub_CorAuthor1",
+                      "Pub_CorAuthor2",
+                      "Pub_CorAuthor3",
+                      "Pub_CorAuthor4",
+                      "Pub_CorAuthor5")]
+      data <- pivot_longer(data,cols = c(1:5),
+                           names_to = "Label",
+                           values_to = "Author")
+      data <- group_by(data,Author) %>% summarise(Number=n())
+      data <- subset(data,Author!="NA")
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_col(aes(x = Number,y = reorder(Author, Number),
+                     fill = Author),
+                 color="black",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 12.0),
+              axis.text.x.bottom = element_text(size=10))
+    })
     ###########################################################################
     #Output the plot  
     output$PlotCN1 <- renderPlot({  
