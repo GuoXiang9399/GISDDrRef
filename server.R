@@ -14,7 +14,7 @@
   function(input, output, session) {  
     # data input
     datasetInput <- function() {  
-      read_excel("GISDDrRef.xlsx")  
+      read_excel("Data/GISDDrRef.xlsx")  
     }  
     filteredData <- reactive({  
       data <- datasetInput()  

@@ -13,7 +13,7 @@
   library(viridis)
 ###############################################################################
 #loading files
-  data <- read_excel("GISDDrRef.xlsx")
+  data <- read_excel("Data/GISDDrRef.xlsx")
 ###############################################################################
 #data
   data$Epi_Year_star <- as.numeric(data$Epi_Year_star)
