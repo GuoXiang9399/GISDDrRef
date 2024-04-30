@@ -51,18 +51,6 @@
                       imageOutput("Plot4", height = 420))
                   ),
                 fluidRow(
-                  box(title = "TOP Authors",  
-                      background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("Plot7", height = 280)),
-                  box(title = "Authors net",
-                      background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("Plot8", height = 280))
-                 ),
-                fluidRow(
                   box(title = "Year of Publish",  
                       background = "purple",
                       solidHeader = TRUE,
@@ -120,25 +108,20 @@
                 )
         ),
         tabItem(tabName = "Data",
+                selectInput("Epi_Region", "Choose a region:",
+                            c("All",
+                              "GMS-China",
+                              "SEA",
+                              "CNA",
+                              "SA",
+                              "SASC")),
                 selectInput("Epi_Country", "Choose a country/area:",
                           c("All",
                             "China","Vietnam","Thailand","Myanmar",
                             "Brazil")),
-                selectInput("Pub_Affiliation", "Choose a affiliation:",
-                            c("All",
-                              "Chinese Center for Disease Control and Prevention",
-                              "Guangdong Provincial Center for Disease Control and Prevention",
-                              "Guangdong Guangzhou Center for Disease Control and Prevention",
-                              "Zhejiang Provincial Center for Disease Control and Prevention",
-                              "Fujian Provincial Center for Disease Control and Prevention",
-                              "Southern Medical University",
-                              "Chinese Academy of Medical Sciences & Peking Union Medical College",
-                              "Yunnan Institute of Parasitic Diseases")),
                 fluidRow(
                   column(width = 12, status = "info", solidHeader = TRUE,
-                         box(dataTableOutput("table"), width = NULL)),
-                  column(width = 12,
-                         box(tabItem(tabName = "downloadData")))     
+                         box(dataTableOutput("table"), width = NULL))    
                   )
                 ),
         tabItem(tabName = "About",

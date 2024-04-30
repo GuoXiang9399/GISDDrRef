@@ -18,11 +18,11 @@
     }  
     filteredData <- reactive({  
       data <- datasetInput()  
+      if (input$Epi_Region != "All") {  
+        data <- data[data$Epi_Region == input$Epi_Region, ]  
+      }  
       if (input$Epi_Country != "All") {  
         data <- data[data$Epi_Country == input$Epi_Country, ]  
-      }  
-      if (input$Pub_Affiliation != "All") {  
-        data <- data[data$Pub_Affiliation == input$Pub_Affiliation, ]  
       }  
       return(data)  
     })
@@ -42,17 +42,27 @@
                     ),
                   scrollX = TRUE, # 启用水平滚动 
                   scrollCollapse = TRUE, # 仅在需要时才显示滚动条  
-                  paging = FALSE,
+                  paging = T,
                   columnDefs = list(     # 设置列的定义  
                     list(visible = FALSE, targets = 0),  # 隐藏第一列（通常是行索引） 
                     list(visible = FALSE, targets = 1),  # 设置第二列的宽度为100像素  
-                    list(width = '150px', targets = 2),  # 设置第二列的宽度为100像素 
+                    list(width = '350px', targets = 2),  # 设置第二列的宽度为100像素 
                     list(width = '150px', targets = 3),  # 设置第二列的宽度为100像素  
                     list(width = '150px', targets = 4),  # 设置第二列的宽度为100像素  
                     list(width = '150px', targets = 5),  # 设置第二列的宽度为100像素  
-                    list(width = '150px', targets = 6),  # 设置第二列的宽度为100像素  
+                    list(visible = FALSE, targets = 6),  # 设置第二列的宽度为100像素  
                     list(width = '15px', targets = 7),  # 设置第二列的宽度为100像素  
-                    list(width = '15px', targets = 8)  )
+                    list(visible = FALSE, targets = 8),  # 设置第二列的宽度为100像素  
+                    list(visible = FALSE, targets = 9) ,  # 设置第二列的宽度为100像素  
+                    list(visible = FALSE, targets = 10) ,  # 设置第二列的宽度为100像素  
+                    list(visible = FALSE, targets = 11),
+                    list(width = '15px', targets = 12),
+                    list(width = '15px', targets = 13),
+                    list(width = '15px', targets = 14),
+                    list(visible = FALSE, targets = 15),
+                    list(width = '15px', targets = 16),
+                    list(visible = FALSE, targets = 17),
+                    list(width = '15px', targets = 18))
                   )
                 )  
     }, server = FALSE)
@@ -160,8 +170,8 @@
       data <- datasetInput()  
       data_summary <- data %>%  
         group_by(Pub_Publish_year) %>%  
-        summarise(Number=n(), .groups = 'drop') # 加上.groups = 'drop'以避免警告  
-      
+        summarise(Number=n(), .groups = 'drop') # 加上.groups = 'drop'以避免警告
+      data_summary <- subset(data_summary, Pub_Publish_year>0)
       # 使用ggplot2创建柱状图  
       ggplot(data_summary, aes(x = Pub_Publish_year, y = Number)) +  
         geom_col(color="black", fill="#9BD5E7", linewidth=0.50,width=0.7) +  

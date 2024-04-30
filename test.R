@@ -67,4 +67,23 @@
   data <- group_by(data,Author) %>% summarise(Number=n())
   data <- subset(data,Author!="NA")
   
+  library(dygraphs)
+  
+  data_summary <- data %>%  
+    group_by(Pub_Publish_year) %>%  
+    summarise(Number=n(), .groups = 'drop') # 加上.groups = 'drop'以避免警告  
+  data_summary <- subset(data_summary, Pub_Publish_year>0)
+  dygraph(data_summary , ylab = "Number of involved papers")%>% dyRangeSelector()
+  # 使用ggplot2创建柱状图  
+  ggplot(data_summary, aes(x = Pub_Publish_year, y = Number)) +  
+    geom_col(color="black", fill="#9BD5E7", linewidth=0.50,width=0.7) +  
+    xlab("") +  
+    ylab("Number of involved papers") +  
+    scale_x_continuous(breaks = seq(1900, 2100, by = 2)) +  
+    scale_y_continuous(expand = c(0,0),breaks = c(seq(0,2000,by=5)))+
+    theme_classic()+  
+    theme(legend.position = "none",
+          axis.text.x = element_text(angle=30,size=10),
+          axis.text.y = element_text(size=10))
+  
   
