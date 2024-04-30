@@ -293,9 +293,8 @@
       data <- data[,c("Pub_CorAuthor1",
                       "Pub_CorAuthor2",
                       "Pub_CorAuthor3",
-                      "Pub_CorAuthor4",
-                      "Pub_CorAuthor5")]
-      data <- pivot_longer(data,cols = c(1:5),
+                      "Pub_CorAuthor4")]
+      data <- pivot_longer(data,cols = c(1:4),
                            names_to = "Label",
                            values_to = "Author")
       data <- group_by(data,Author) %>% summarise(Number=n())
@@ -318,9 +317,8 @@
       data <- data[,c("Pub_CorAuthor1",
                       "Pub_CorAuthor2",
                       "Pub_CorAuthor3",
-                      "Pub_CorAuthor4",
-                      "Pub_CorAuthor5")]
-      data <- pivot_longer(data,cols = c(1:5),
+                      "Pub_CorAuthor4")]
+      data <- pivot_longer(data,cols = c(1:4),
                            names_to = "Label",
                            values_to = "Author")
       data <- group_by(data,Author) %>% summarise(Number=n())
