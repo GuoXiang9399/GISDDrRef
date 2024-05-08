@@ -1,0 +1,20 @@
+Package: GISDDrRef
+Type: Package
+Title: GISDDrRef 
+Version: 0.1.0
+Author: Xiang Guo
+Authors@R: c(person("Guo", "Xiang", email = "guoxiang199399@163.com",
+                    role = c("aut", "cre")))
+Maintainer: The package maintainer <guoxiang199399@163.com>
+Description: GISDDrRef.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+RoxygenNote: 7.3.1
+Roxygen: list(markdown = TRUE)
+URL: https://www.bic.ac.cn/BIC
+Depends:
+  R (>= 3.1)
+Imports:
+  shiny, shinydashboard, readxl, dplyr, tidyr, maps,DT, ggplot2, viridis
