@@ -28,7 +28,7 @@
     })
     # data input
     locationInput <- function() {  
-      read_excel("data/Loca.GPS.xlsx")  
+      read_excel("Data/Loca.GPS.xlsx")  
     }  
     # Output the filtered data as a table  
     output$table <- renderDataTable({  
