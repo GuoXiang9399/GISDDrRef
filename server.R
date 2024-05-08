@@ -72,7 +72,7 @@
       data <- datasetInput()
       infoBox(
         "Involved study", paste0(
-          length(data$Pub_Title)  
+          length(data$Pub_literature_title)  
         ), icon = icon("list"),
         color = "purple"
       )
@@ -103,7 +103,7 @@
       data <- subset(data, Type_Epide=="T")
       infoBox(
         "Epidemological study", paste0(
-          length(data$Pub_Title)  
+          length(data$Pub_literature_title)  
         ), icon = icon("list"),
         color = "purple"
       )
@@ -114,7 +114,7 @@
       data <- subset(data, Type_Mole=="T")
       infoBox(
         "Molecular study", paste0(
-          length(data$Pub_Title)  
+          length(data$Pub_literature_title)  
         ), icon = icon("list"),
         color = "purple"
       )
@@ -125,7 +125,7 @@
       data <- subset(data, Type_Clini=="T")
       infoBox(
         "Clinical analysis", paste0(
-          length(data$Pub_Title)  
+          length(data$Pub_literature_title)  
         ), icon = icon("list"),
         color = "purple"
       )
@@ -137,7 +137,7 @@
       data <- subset(data,Pub_AffiliationCN!="NA")
       infoBox(
         "Involved study", paste0(
-          length(data$Pub_Title)  
+          length(data$Pub_literature_title)  
         ), icon = icon("list"),
         color = "purple"
       )

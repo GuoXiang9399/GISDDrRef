@@ -126,7 +126,12 @@
                 ),
         tabItem(tabName = "About",
                 h2("GISDDrRef"),
-                h5("Our study has established a reproduceable and comparable global genotyping framework of DENV with contextualizing spatiotemporal epidemiological information before. The defned framework was discriminated with three hierarchical layers of genotype, subgenotype and clade with respective mean pairwise distances 2–6%, 0.8–2%, and ≤0.8%. This framework reveals that the persisting traditional endemic sourcing, the emerging epidemic difusing, and the probably hidden epidemics are the crucial drivers of the rapid global spread of dengue. ")
+                h5(""),
+                h5("Database Operation Manager: Xiang Guo"),
+                h5(""),
+                h5("Address: Southern Medical University"),
+                h5(""),
+                h5("Phone: 022-61648598")
                 )
       )
     )
