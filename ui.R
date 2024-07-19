@@ -83,12 +83,12 @@
                   infoBoxOutput("affiliationBoxCN")
                 ),
                 fluidRow(
-                  box(title = "省级范围研究发表",  
+                  box(title = "Province",  
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("PlotCN1", height = 350)),
-                  box(title = "值得关注的研究范围/城市",
+                  box(title = "City/Area",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,

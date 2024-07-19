@@ -214,27 +214,27 @@
         guides(fill=guide_legend(title = NULL,nrow=1))
     })
     #Output the plot  
-    output$Plot3 <- renderPlot({  
-     ggplot()
-       })
-   # output$Plot3 <- renderPlot({  
-    #  data <- datasetInput()
-     # data <- subset(data, Pub_Affiliation!="NA")
-    #  data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
-    #   group_by(Abc) %>% summarise(Number=n()) %>%
-    #    separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
-    #  data <- subset(data, Number > 3)
-    #  ggplot(data) +  
-    #    theme_classic() +  
-    #    ylab("")+xlab("Number of involved paper")+
-    #    geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
-    #                 fill = Pub_Affiliation_location),
-    #             color="black",linewidth=0.50,width=0.7) +  
-    #    scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
-    #    theme(legend.position = "none",
-    #          axis.text.y = element_text(size = 12.0),
-    #          axis.text.x.bottom = element_text(size=10))
-    #})
+    #output$Plot3 <- renderPlot({  
+    # ggplot()
+    #   })
+     output$Plot3 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Pub_Affiliation!="NA")
+      data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
+       group_by(Abc) %>% summarise(Number=n()) %>%
+        separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
+      data <- subset(data, Number > 3)
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
+                     fill = Pub_Affiliation_location),
+                 color="black",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 12.0),
+              axis.text.x.bottom = element_text(size=10))
+    })
     #Output the plot  
     output$Plot4 <- renderPlot({  
       data <- datasetInput()
@@ -277,7 +277,7 @@
         theme_classic()+  
         scale_y_continuous(breaks = c(seq(1900,2100,by=4)))+
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=90,size=9),
+              axis.text.x = element_text(angle=90,size=6),
               axis.text.y = element_text(size=12))
     })
     #Output the plot
@@ -293,7 +293,7 @@
         geom_col(aes(Epi_period,Number),
                  color="black", fill="#9BD5E7", linewidth=0.50,width=0.7)+
         xlab("") +  ylab("Number of involved papers") +  
-        scale_x_continuous(expand = c(0,0),breaks=c(seq(1,10,by=1),seq(0,100,by=5)))+
+        scale_x_continuous(expand = c(0,0),breaks=c(seq(0,100,by=5)))+
         scale_y_continuous(expand = c(0,0),breaks=c(seq(0,1000,by=10)))+
         theme_classic()+  
         theme(legend.position = "none",
@@ -352,23 +352,23 @@
     output$PlotCN1 <- renderPlot({  
       data <- datasetInput()  
       data <- subset(data, Epi_Country=="China")
-      data <- subset(data, Epi_ProvinceCN!="NA")
+      data <- subset(data, Epi_Province!="NA")
       data_summary <- data %>%
-        unite(Epi_ProvinceCN,Pub_Publish_year, col="Abc",sep="%%%") %>%
+        unite(Epi_Province,Pub_Publish_year, col="Abc",sep="%%%") %>%
         group_by(Abc) %>%  
         summarise(Number=n(), .groups = 'drop') %>% # 加上.groups = 'drop'以避免警告  
-        separate(Abc,into=c("Epi_ProvinceCN","Pub_Publish_year"),sep="%%%")
+        separate(Abc,into=c("Epi_Province","Pub_Publish_year"),sep="%%%")
       # 使用ggplot2创建柱状图  
-      ggplot(data_summary, aes(x = Pub_Publish_year, y = Epi_ProvinceCN)) +  
-        geom_point(aes(size=Number,fill=Epi_ProvinceCN),color="black",shape=21 )+
+      ggplot(data_summary, aes(x = Pub_Publish_year, y = Epi_Province)) +  
+        geom_point(aes(size=Number,fill=Epi_Province),color="black",shape=21 )+
         xlab("") +  ylab("") +  
         theme_bw()+  
         scale_y_discrete(limits=c(
-          "北京","河北",
-          "湖北","贵州","安徽","陕西","上海",
-          "香港","山东","湖南","江西","江苏",
-          "澳门","河南","广西","海南","台湾",
-          "福建","云南","浙江","广东","全国范围"
+          "Beijing","Hebei",
+          "Hubei","Guizhou","Anhui","Shaanxi","Shanghai",
+          "Hongkong","Shandong","Hunan","Jiangxi","Jiangsu",
+          "Macau","Henan","Guangxi","Hainan","Taiwan",
+          "Fujian","Yunnan","Zhejiang","Guangdong","Nationwide"
           ))+
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
@@ -379,14 +379,14 @@
     output$PlotCN2 <- renderPlot({  
       data <- datasetInput()
       data <- subset(data, Epi_Country=="China")
-      data <- subset(data, Epi_CityCN!="NA" & Epi_CityCN!="省级范围" )
-      data <- group_by(data,Epi_CityCN) %>%
+      data <- subset(data, Epi_City!="NA" & Epi_City!="省级范围" )
+      data <- group_by(data,Epi_City) %>%
         summarise(Number=n())
       data <- subset(data, Number > 1)
       ggplot(data) +  
         theme_classic() + xlab("") + ylab("Number of involved paper") +
-        geom_col(aes(x = reorder(Epi_CityCN,-Number),y = Number,
-                     fill = Epi_CityCN),
+        geom_col(aes(x = reorder(Epi_City,-Number),y = Number,
+                     fill = Epi_City),
                  color="black",linewidth=0.50,width=0.7) +  
         scale_y_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=3)))+
         scale_fill_viridis(discrete = T)+
@@ -419,19 +419,20 @@
     output$PlotCN4 <- renderPlot({  
       data <- datasetInput()
       data <- subset(data, Epi_Country=="China")
-      data <- subset(data, Pub_AffiliationCN!="NA")
-      data <- group_by(data, Pub_AffiliationCN) %>% summarise(Number=n())
+      data <- subset(data, Pub_Affiliation!="NA")
+      data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
+        group_by(Abc) %>% summarise(Number=n()) %>%
+        separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
       data <- subset(data, Number > 2)
       ggplot(data) +  
         theme_classic() +  
         ylab("")+xlab("Number of involved paper")+
-        geom_col(aes(x = Number,y = reorder(Pub_AffiliationCN, Number),
-                     fill = Pub_AffiliationCN),
+        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
+                     fill = Pub_Affiliation_location),
                  color="black",linewidth=0.50,width=0.7) +  
         scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
-        scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 14),
+              axis.text.y = element_text(size = 14.0),
               axis.text.x.bottom = element_text(size=10))
     })
     ###########################################################################
