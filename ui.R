@@ -95,12 +95,12 @@
                       imageOutput("PlotCN2", height = 350))
                   ),
                 fluidRow(
-                  box(title = "值得关注的专业期刊",  
+                  box(title = "TOP Journals",  
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
                       imageOutput("PlotCN3", height = 500)),
-                  box(title = "值得关注的研究机构",
+                  box(title = "TOP Affiliations",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
