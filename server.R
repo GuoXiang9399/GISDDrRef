@@ -215,23 +215,26 @@
     })
     #Output the plot  
     output$Plot3 <- renderPlot({  
-      data <- datasetInput()
-      data <- subset(data, Pub_Affiliation!="NA")
-      data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
-        group_by(Abc) %>% summarise(Number=n()) %>%
-        separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
-      data <- subset(data, Number > 3)
-      ggplot(data) +  
-        theme_classic() +  
-        ylab("")+xlab("Number of involved paper")+
-        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
-                     fill = Pub_Affiliation_location),
-                 color="black",linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
-        theme(legend.position = "none",
-              axis.text.y = element_text(size = 12.0),
-              axis.text.x.bottom = element_text(size=10))
-    })
+     ggplot()
+       })
+   # output$Plot3 <- renderPlot({  
+    #  data <- datasetInput()
+     # data <- subset(data, Pub_Affiliation!="NA")
+    #  data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
+    #   group_by(Abc) %>% summarise(Number=n()) %>%
+    #    separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
+    #  data <- subset(data, Number > 3)
+    #  ggplot(data) +  
+    #    theme_classic() +  
+    #    ylab("")+xlab("Number of involved paper")+
+    #    geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
+    #                 fill = Pub_Affiliation_location),
+    #             color="black",linewidth=0.50,width=0.7) +  
+    #    scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+    #    theme(legend.position = "none",
+    #          axis.text.y = element_text(size = 12.0),
+    #          axis.text.x.bottom = element_text(size=10))
+    #})
     #Output the plot  
     output$Plot4 <- renderPlot({  
       data <- datasetInput()
