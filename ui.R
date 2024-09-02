@@ -34,11 +34,6 @@
                             c("All","GMS-China","SEA","SASC",
                               "CNA","SA","MED","PHI",
                               "OCE","TWP","SWIO","RAR")),
-                selectInput("Epi_Country", "Choose a country/area:",
-                            c("All",
-                              "China","Vietnam","Thailand","Myanmar","Lao PDR","Myanmar",
-                              "Singapore","Malaysia","Indonesia","Philippines","India",
-                              "Brazil")),
                 fluidRow(
                   infoBoxOutput("studyBox"),
                   infoBoxOutput("journalBox"),
