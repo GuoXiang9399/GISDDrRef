@@ -69,7 +69,7 @@
     ###########################################################################
     #
     output$studyBox <- renderInfoBox({
-      data <- datasetInput()
+      data <- filteredData()  
       infoBox(
         "Involved study", paste0(
           length(data$Pub_literature_title)  
@@ -79,7 +79,7 @@
     })
     #
     output$journalBox <- renderInfoBox({
-      data <- datasetInput()
+      data <- filteredData()  
       infoBox(
         "Involved journal", paste0(
           length(unique(data$Pub_Journal))  
@@ -89,7 +89,7 @@
     })
     #
     output$affiliationBox <- renderInfoBox({
-      data <- datasetInput()
+      data <- filteredData()  
       infoBox(
         "Involved affiliation", paste0(
           length(unique(data$Pub_Affiliation))  
@@ -99,7 +99,7 @@
     })
     #
     output$EpideBox <- renderInfoBox({
-      data <- datasetInput()
+      data <- filteredData()  
       data <- subset(data, Type_Epide=="T")
       infoBox(
         "Epidemological study", paste0(
@@ -110,7 +110,7 @@
     })
     #
     output$MoleBox <- renderInfoBox({
-      data <- datasetInput()
+      data <- filteredData()  
       data <- subset(data, Type_Mole=="T")
       infoBox(
         "Molecular study", paste0(
@@ -121,7 +121,7 @@
     })
     #
     output$CliniBox <- renderInfoBox({
-      data <- datasetInput()
+      data <- filteredData()  
       data <- subset(data, Type_Clini=="T")
       infoBox(
         "Clinical analysis", paste0(
@@ -167,26 +167,27 @@
     ###########################################################################
     #Output the plot  
     output$Plot1 <- renderPlot({  
-      data <- datasetInput()  
+      data <- filteredData()  
       data_summary <- data %>%  
         group_by(Pub_Publish_year) %>%  
         summarise(Number=n(), .groups = 'drop') # 加上.groups = 'drop'以避免警告
       data_summary <- subset(data_summary, Pub_Publish_year>0)
       # 使用ggplot2创建柱状图  
       ggplot(data_summary, aes(x = Pub_Publish_year, y = Number)) +  
-        geom_col(color="black", fill="#9BD5E7", linewidth=0.50,width=0.7) +  
+        geom_col(color="black", fill="#605CA8", linewidth=0.50,width=0.7) +  
         xlab("") +  
         ylab("Number of involved papers") +  
-        scale_x_continuous(breaks = seq(1900, 2100, by = 2)) +  
-        scale_y_continuous(expand = c(0,0),breaks = c(seq(0,2000,by=5)))+
+        scale_x_continuous(breaks = seq(1900, 2100, by = 4)) +  
+        scale_y_continuous(expand = c(0,0))+
         theme_classic()+  
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=30,size=10),
-              axis.text.y = element_text(size=10))
+              axis.title = element_text(size=14),
+              axis.text.x = element_text(size=12),
+              axis.text.y = element_text(size=12))
     })
     #Output the plot  
     output$Plot2 <- renderPlot({  
-      data <- datasetInput()
+      data <- filteredData()  
       world <- map_data('world')
       data <- group_by(data,Epi_Country) %>%
         summarise(Number=n())
@@ -195,10 +196,11 @@
       data <- left_join(data,location,by="Epi_Country")
       ggplot(world,aes(long,lat))+theme_void()+coord_equal()+
         geom_map(map=world,aes(map_id=region),
-                 fill="#E0F2F7", color=NA,size=0.0)+
+                 fill="gray80", color="gray80",size=0.25)+
         geom_point(data=data,aes(x=long,y=lat,size=Number),
-                   alpha=0.98,stroke=0.1,shape=21,
-                   color="black",fill="#D58482")+
+                   alpha=0.99,stroke=0.001,shape=21,
+                   color="#605CA8",fill="#605CA8")+
+        scale_size(range = c(2.5, 10))+
         theme(plot.background = element_blank(),
               axis.line = element_blank(),
               axis.ticks = element_blank(),
@@ -218,41 +220,40 @@
     # ggplot()
     #   })
      output$Plot3 <- renderPlot({  
-      data <- datasetInput()
-      data <- subset(data, Pub_Affiliation!="NA")
+       data <- filteredData()  
+       data <- subset(data, Pub_Affiliation!="NA")
       data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
        group_by(Abc) %>% summarise(Number=n()) %>%
         separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
       data <- subset(data, Number > 3)
       ggplot(data) +  
         theme_classic() +  
-        ylab("")+xlab("Number of involved paper")+
-        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
-                     fill = Pub_Affiliation_location),
-                 color="black",linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+        ylab("")+xlab("Number of involved paper (>3)")+
+        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number)),
+                 color="black", fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0))+
         theme(legend.position = "none",
-              axis.text.y = element_text(size = 12.0),
-              axis.text.x.bottom = element_text(size=10))
+              axis.title = element_text(size=14),
+              axis.text.y = element_text(size = 12),
+              axis.text.x.bottom = element_text(size=12))
     })
     #Output the plot  
     output$Plot4 <- renderPlot({  
-      data <- datasetInput()
+      data <- filteredData()  
       data <- subset(data, Pub_Journal!="NA")
       data <- group_by(data, Pub_Journal) %>%
         summarise(Number=n())
       data <- subset(data, Number > 5)
       ggplot(data) +  
         theme_classic() +  
-        ylab("")+xlab("Number of involved paper")+
-        geom_col(aes(x = Number,y = reorder(Pub_Journal, Number),
-                     fill=Pub_Journal),
-                 color="black", linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0),#limits = c(0,10),
-                           breaks = c(seq(0,1000,by=2)))+
+        ylab("")+xlab("Number of involved paper (>5)")+
+        geom_col(aes(x = Number,y = reorder(Pub_Journal, Number)),
+                 color="black", fill="#605CA8", linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0))+
         theme(legend.position = "none",
+              axis.title = element_text(size=14),
               axis.text.y = element_text(size = 12.0),
-              axis.text.x.bottom = element_text(size=10))
+              axis.text.x.bottom = element_text(size=12))
     })
     #Output the plot
     output$Plot5 <- renderPlot({  
@@ -360,7 +361,8 @@
         separate(Abc,into=c("Epi_Province","Pub_Publish_year"),sep="%%%")
       # 使用ggplot2创建柱状图  
       ggplot(data_summary, aes(x = Pub_Publish_year, y = Epi_Province)) +  
-        geom_point(aes(size=Number,fill=Epi_Province),color="black",shape=21 )+
+        geom_point(aes(size=Number),
+                   color="black",fill="#605CA8",shape=21 )+
         xlab("") +  ylab("") +  
         theme_bw()+  
         scale_y_discrete(limits=c(
@@ -385,10 +387,9 @@
       data <- subset(data, Number > 1)
       ggplot(data) +  
         theme_classic() + xlab("") + ylab("Number of involved paper") +
-        geom_col(aes(x = reorder(Epi_City,-Number),y = Number,
-                     fill = Epi_City),
-                 color="black",linewidth=0.50,width=0.7) +  
-        scale_y_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=3)))+
+        geom_col(aes(x = reorder(Epi_City,-Number),y = Number),
+                 color="black",fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_y_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=5)))+
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
               axis.text.x = element_text(angle=90,size=12))
@@ -406,14 +407,15 @@
         ylab("")+xlab("Number of involved paper")+
         geom_segment(aes(yend=reorder(Pub_Journal, Number)),xend=0)+
         geom_point(aes(size=Number),
-                   color="black", shape=21,linewidth=0.50,width=0.7) +  
+                   color="black",fill="#605CA8", shape=21,linewidth=0.50,width=0.7) +  
         scale_x_continuous(#expand = c(0,0),#limits = c(0,10),
-                           breaks = c(seq(0,1000,by=1)))+
+                           breaks = c(seq(0,1000,by=3)))+
         scale_fill_viridis(discrete = T)+
         theme(legend.position = "none",
               axis.ticks.y = element_blank(),
               axis.text.y = element_text(size = 14),
-              axis.text.x.bottom = element_text(size=10))
+              axis.title = element_text(size = 14),
+              axis.text.x.bottom = element_text(size=12))
     })
     #Output the plot  
     output$PlotCN4 <- renderPlot({  
@@ -427,13 +429,191 @@
       ggplot(data) +  
         theme_classic() +  
         ylab("")+xlab("Number of involved paper")+
-        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number),
-                     fill = Pub_Affiliation_location),
-                 color="black",linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number)),
+                 color="black", fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=5)))+
         theme(legend.position = "none",
               axis.text.y = element_text(size = 14.0),
-              axis.text.x.bottom = element_text(size=10))
+              axis.title = element_text(size = 14),
+              axis.text.x.bottom = element_text(size=12))
+    })
+    ###########################################################################
+    #Output the plot  
+    output$PlotBrazil1 <- renderPlot({  
+      data <- datasetInput()  
+      data <- subset(data, Epi_Country=="China")
+      data <- subset(data, Epi_Province!="NA")
+      data_summary <- data %>%
+        unite(Epi_Province,Pub_Publish_year, col="Abc",sep="%%%") %>%
+        group_by(Abc) %>%  
+        summarise(Number=n(), .groups = 'drop') %>% # 加上.groups = 'drop'以避免警告  
+        separate(Abc,into=c("Epi_Province","Pub_Publish_year"),sep="%%%")
+      # 使用ggplot2创建柱状图  
+      ggplot(data_summary, aes(x = Pub_Publish_year, y = Epi_Province)) +  
+        geom_point(aes(size=Number),
+                   color="black",fill="#605CA8",shape=21 )+
+        xlab("") +  ylab("") +  
+        theme_bw()+  
+        scale_y_discrete(limits=c(
+          "Beijing","Hebei",
+          "Hubei","Guizhou","Anhui","Shaanxi","Shanghai",
+          "Hongkong","Shandong","Hunan","Jiangxi","Jiangsu",
+          "Macau","Henan","Guangxi","Hainan","Taiwan",
+          "Fujian","Yunnan","Zhejiang","Guangdong","Nationwide"
+        ))+
+        scale_fill_viridis(discrete = T)+
+        theme(legend.position = "none",
+              axis.text.x = element_text(angle=30,size=10),
+              axis.text.y = element_text(size=12))
+    })
+    #Output the plot  
+    output$PlotBrazil2 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="Brazil")
+      data <- subset(data, Epi_City!="NA" & Epi_City!="省级范围" )
+      data <- group_by(data,Epi_City) %>%
+        summarise(Number=n())
+      data <- subset(data, Number > 1)
+      ggplot(data) +  
+        theme_classic() + xlab("") + ylab("Number of involved paper") +
+        geom_col(aes(x = reorder(Epi_City,-Number),y = Number),
+                 color="black",fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_y_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=5)))+
+        scale_fill_viridis(discrete = T)+
+        theme(legend.position = "none",
+              axis.text.x = element_text(angle=90,size=12))
+    })
+    #Output the plot  
+    output$PlotBrazil3 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="Brazil")
+      data <- subset(data, Pub_Journal!="NA")
+      data <- group_by(data, Pub_Journal) %>% summarise(Number=n())
+      data <- subset(data, Number > 2)
+      ggplot(data,aes(x = Number,y = reorder(Pub_Journal, Number),
+                      fill=Pub_Journal)) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_segment(aes(yend=reorder(Pub_Journal, Number)),xend=0)+
+        geom_point(aes(size=Number),
+                   color="black",fill="#605CA8", shape=21,linewidth=0.50,width=0.7) +  
+        scale_x_continuous(#expand = c(0,0),#limits = c(0,10),
+          breaks = c(seq(0,1000,by=1)))+
+        scale_fill_viridis(discrete = T)+
+        theme(legend.position = "none",
+              axis.ticks.y = element_blank(),
+              axis.text.y = element_text(size = 14),
+              axis.title = element_text(size = 14),
+              axis.text.x.bottom = element_text(size=12))
+    })
+    #Output the plot  
+    output$PlotBrazil4 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="Brazil")
+      data <- subset(data, Pub_Affiliation!="NA")
+      data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
+        group_by(Abc) %>% summarise(Number=n()) %>%
+        separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
+      data <- subset(data, Number > 2)
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number)),
+                 color="black", fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=1)))+
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 14.0),
+              axis.title = element_text(size = 14),
+              axis.text.x.bottom = element_text(size=12))
+    })
+    ###########################################################################
+    #Output the plot  
+    output$PlotIndia1 <- renderPlot({  
+      data <- datasetInput()  
+      data <- subset(data, Epi_Country=="China")
+      data <- subset(data, Epi_Province!="NA")
+      data_summary <- data %>%
+        unite(Epi_Province,Pub_Publish_year, col="Abc",sep="%%%") %>%
+        group_by(Abc) %>%  
+        summarise(Number=n(), .groups = 'drop') %>% # 加上.groups = 'drop'以避免警告  
+        separate(Abc,into=c("Epi_Province","Pub_Publish_year"),sep="%%%")
+      # 使用ggplot2创建柱状图  
+      ggplot(data_summary, aes(x = Pub_Publish_year, y = Epi_Province)) +  
+        geom_point(aes(size=Number),
+                   color="black",fill="#605CA8",shape=21 )+
+        xlab("") +  ylab("") +  
+        theme_bw()+  
+        scale_y_discrete(limits=c(
+          "Beijing","Hebei",
+          "Hubei","Guizhou","Anhui","Shaanxi","Shanghai",
+          "Hongkong","Shandong","Hunan","Jiangxi","Jiangsu",
+          "Macau","Henan","Guangxi","Hainan","Taiwan",
+          "Fujian","Yunnan","Zhejiang","Guangdong","Nationwide"
+        ))+
+        scale_fill_viridis(discrete = T)+
+        theme(legend.position = "none",
+              axis.text.x = element_text(angle=30,size=10),
+              axis.text.y = element_text(size=12))
+    })
+    #Output the plot  
+    output$PlotIndia2 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="India")
+      data <- subset(data, Epi_City!="NA" & Epi_City!="省级范围" )
+      data <- group_by(data,Epi_City) %>%
+        summarise(Number=n())
+      data <- subset(data, Number > 1)
+      ggplot(data) +  
+        theme_classic() + xlab("") + ylab("Number of involved paper") +
+        geom_col(aes(x = reorder(Epi_City,-Number),y = Number),
+                 color="black",fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_y_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=5)))+
+        scale_fill_viridis(discrete = T)+
+        theme(legend.position = "none",
+              axis.text.x = element_text(angle=90,size=12))
+    })
+    #Output the plot  
+    output$PlotIndia3 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="India")
+      data <- subset(data, Pub_Journal!="NA")
+      data <- group_by(data, Pub_Journal) %>% summarise(Number=n())
+      data <- subset(data, Number > 2)
+      ggplot(data,aes(x = Number,y = reorder(Pub_Journal, Number),
+                      fill=Pub_Journal)) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_segment(aes(yend=reorder(Pub_Journal, Number)),xend=0)+
+        geom_point(aes(size=Number),
+                   color="black",fill="#605CA8", shape=21,linewidth=0.50,width=0.7) +  
+        scale_x_continuous(#expand = c(0,0),#limits = c(0,10),
+          breaks = c(seq(0,1000,by=1)))+
+        scale_fill_viridis(discrete = T)+
+        theme(legend.position = "none",
+              axis.ticks.y = element_blank(),
+              axis.text.y = element_text(size = 14),
+              axis.title = element_text(size = 14),
+              axis.text.x.bottom = element_text(size=12))
+    })
+    #Output the plot  
+    output$PlotIndia4 <- renderPlot({  
+      data <- datasetInput()
+      data <- subset(data, Epi_Country=="India")
+      data <- subset(data, Pub_Affiliation!="NA")
+      data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
+        group_by(Abc) %>% summarise(Number=n()) %>%
+        separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
+      data <- subset(data, Number > 2)
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number)),
+                 color="black", fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=1)))+
+        theme(legend.position = "none",
+              axis.text.y = element_text(size = 14.0),
+              axis.title = element_text(size = 14),
+              axis.text.x.bottom = element_text(size=12))
     })
     ###########################################################################
     #Download handler for the filtered data  
