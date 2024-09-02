@@ -29,7 +29,6 @@
     dashboardBody(
       tabItems(
         tabItem(tabName = "Summary",
-                h2("GISDDrRef"),
                 selectInput("Epi_Region", "Choose a region:",
                             c("All","GMS-China","SEA","SASC",
                               "CNA","SA","MED","PHI",
@@ -71,7 +70,6 @@
                 
                 ),
         tabItem(tabName = "EpideinChina",
-                h2("GISDDrRef"),
                 fluidRow(
                   infoBoxOutput("studyBoxCN"),
                   infoBoxOutput("journalBoxCN"),
@@ -183,8 +181,8 @@
                 ),
         tabItem(tabName = "About",
                 h3("Introduction"),
-                h5("To create a thorough overview of dengue molecular epidemiology research and explore pioneering topics, we systematically retrieved 591 studies for inclusion in our descriptive analysis. This compilation is now accessible through GISDDrRef, an intuitive and use-friendly web application"),
-                h5("GISDDrRef features two interactive dashboards, offering an extensive overview of global and Chinese dengue molecular epidemiological research. Each dashboard has been carefully curated to underscore key findings and trends in the field. With this app, we focus on the intricacies of molecular epidemiology, including fragment measurements conducted in each study, the sequencing platform employed, and the accession numbers of sequences reported. For clinical studies, we have provided a concise summary that captures essential aspects: the demographics of target populations, the sources of clinical data, and the sample sizes involved."),
+                h4("To create a thorough overview of dengue molecular epidemiology research and explore pioneering topics, we systematically retrieved 591 studies for inclusion in our descriptive analysis. This compilation is now accessible through GISDDrRef, an intuitive and use-friendly web application"),
+                h4("GISDDrRef features two interactive dashboards, offering an extensive overview of global and Chinese dengue molecular epidemiological research. Each dashboard has been carefully curated to underscore key findings and trends in the field. With this app, we focus on the intricacies of molecular epidemiology, including fragment measurements conducted in each study, the sequencing platform employed, and the accession numbers of sequences reported. For clinical studies, we have provided a concise summary that captures essential aspects: the demographics of target populations, the sources of clinical data, and the sample sizes involved."),
                 hr(),
                 h3("Contact"),
                 a(href = "https://www.smu.edu.cn/rdyjs/info/1003/1355.htm",
