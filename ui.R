@@ -20,19 +20,21 @@
       sidebarMenu(
       menuItem("Dashborad - Global", tabName = "Summary", icon = icon("dashboard")),
       menuItem("Dashborad - China", tabName = "EpideinChina", icon = icon("dashboard")),
-      #menuItem("Dashborad - Brazil", tabName = "Brazil", icon = icon("dashboard")),
-      #menuItem("Dashborad - India", tabName = "India", icon = icon("dashboard")),
-      menuItem("Data", tabName = "Data",icon = icon("th")),
+      menuItem("Affiliations", tabName = "Affiliations", icon = icon("school")),
+      menuItem("Journals", tabName = "Journals", icon = icon("book")),
+      menuItem("Researchers", tabName = "Authors", icon = icon("at")),
+      #menuItem("Time", tabName = "Time", icon = icon("dashboard")),
+      menuItem("Explore", tabName = "Explore",icon = icon("th")),
       menuItem("About", tabName = "About", icon = icon("cube"))  
       )
     ),
     dashboardBody(
       tabItems(
         tabItem(tabName = "Summary",
-                selectInput("Epi_Region", "Choose a region:",
-                            c("All","GMS-China","SEA","SASC",
-                              "CNA","SA","MED","PHI",
-                              "OCE","TWP","SWIO","RAR")),
+                #selectInput("Epi_Region", "Choose a region:",
+                 #           c("All","GMS-China","SEA","SASC",
+                  #            "CNA","SA","MED","PHI",
+                   #           "OCE","TWP","SWIO","RAR")),
                 fluidRow(
                   infoBoxOutput("studyBox"),
                   infoBoxOutput("journalBox"),
@@ -60,12 +62,12 @@
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot3", height = 450)),
+                      imageOutput("Plot3p", height = 480)),
                   box(title = "TOP Journals",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("Plot4", height = 450))
+                      imageOutput("Plot4p", height = 480))
                   )
                 
                 ),
@@ -100,83 +102,86 @@
                       imageOutput("PlotCN4", height = 500))
                 )
         ),
-        tabItem(tabName = "Brazil",
-                h2("GISDDrRef"),
+        tabItem(tabName = "Affiliations",
                 fluidRow(
-                  infoBoxOutput("studyBoxBrazil"),
-                  infoBoxOutput("journalBoxBrazil"),
-                  infoBoxOutput("affiliationBoxBrazil")
-                ),
-                fluidRow(
-                  box(title = "Province",  
+                  box(
+                    width = 12,
+                    title = "Involved Affiliations",  
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotBrazil1", height = 350)),
-                  box(title = "City/Area",
-                      #background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("PlotBrazil2", height = 350))
-                ),
-                fluidRow(
-                  box(title = "TOP Journals",  
-                      #background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("PlotBrazil3", height = 500)),
-                  box(title = "TOP Affiliations",
-                      #background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("PlotBrazil4", height = 500))
+                      imageOutput("Plot3", height = 1000))
                 )
         ),
-        tabItem(tabName = "India",
-                h2("GISDDrRef"),
+        tabItem(tabName = "Journals",
                 fluidRow(
-                  infoBoxOutput("studyBoxIndia"),
-                  infoBoxOutput("journalBoxIndia"),
-                  infoBoxOutput("affiliationBoxIndia")
-                ),
-                fluidRow(
-                  box(title = "Province",  
+                  box(
+                    width = 12,
+                    title = "Involved Journals",
                       #background = "purple",
                       solidHeader = TRUE,
                       collapsible = TRUE,
-                      imageOutput("PlotIndia1", height = 350)),
-                  box(title = "City/Area",
-                      #background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("PlotIndia2", height = 350))
-                ),
-                fluidRow(
-                  box(title = "TOP Journals",  
-                      #background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("PlotIndia3", height = 500)),
-                  box(title = "TOP Affiliations",
-                      #background = "purple",
-                      solidHeader = TRUE,
-                      collapsible = TRUE,
-                      imageOutput("PlotIndia4", height = 500))
+                      imageOutput("Plot4", height = 1200))
                 )
         ),
-        tabItem(tabName = "Data",
-                selectInput("Epi_Region", "Choose a region:",
-                            c("All","GMS-China","SEA","SASC",
-                              "CNA","SA","MED","PHI",
-                              "OCE","TWP","SWIO","RAR")),
-                selectInput("Epi_Country", "Choose a country/area:",
-                          c("All",
-                            "China","Vietnam","Thailand","Myanmar","Lao PDR","Myanmar",
-                            "Singapore","Malaysia","Indonesia","Philippines","India",
-                            "Brazil")),
+        tabItem(tabName = "Authors",
+                  fluidRow(
+                    box(
+                      width = 12,
+                      title = "TOP Researchers",
+                      #background = "purple",
+                      solidHeader = TRUE,
+                      collapsible = TRUE,
+                      imageOutput("Plot7", height = 1200))
+                  )
+        ),
+        tabItem(tabName = "Time",
                 fluidRow(
-                  column(width = 12, status = "info", solidHeader = TRUE,
-                         box(dataTableOutput("table"), width = NULL))    
+                  column(12,
+                         box(width=12,
+                             title = "Study period",
+                             solidHeader = TRUE,
+                           imageOutput("Plot5",height = 1200)
+                           ),
+                         box(width=6,
+                             title = "Length of study period",
+                             solidHeader = TRUE,
+                             imageOutput("Plot6",height = 600)
+                         )
+                  )
+                )
+          
+        ),
+        tabItem(tabName = "Explore",
+                fluidRow(
+                  column(12,
+                    column(
+                      width = 9, status = "info", solidHeader = TRUE,
+                      box(dataTableOutput("table"), width = NULL)
+                      ),
+                    column(
+                      width = 3,
+                      box(width = "6 col-md-12",
+                        selectInput("Epi_Region", "Choose a region:",
+                                    c("All","Worldwide","GMS-China","SEA","SASC",
+                                      "CNA","SA","MED","PHI",
+                                      "OCE","TWP","SWIO","RAR")),
+                        selectInput("Epi_Country", "Choose a country/area:",
+                                    c("All",
+                                      "China","Vietnam","Thailand","Myanmar","Lao PDR","Myanmar",
+                                      "Singapore","Malaysia","Indonesia","Philippines","India",
+                                      "Brazil")),
+                        radioButtons("Type_Mole","Choose involved molecular epidemic study",
+                                     c("All","T","F")),
+                        radioButtons("Type_Epide","Choose involved epidemic study",
+                                    c("All","T","F")),
+                        radioButtons("Type_CasRep","Choose if Case Report article",
+                                     c("All","T","F")),
+                        radioButtons("Type_Review","Choose if Review article",
+                                     c("All","T","F"))
+                        )
+                      )
+                   )
                   )
                 ),
         tabItem(tabName = "About",

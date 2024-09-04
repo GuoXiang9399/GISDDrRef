@@ -24,6 +24,18 @@
       if (input$Epi_Country != "All") {  
         data <- data[data$Epi_Country == input$Epi_Country, ]  
       }  
+      if (input$Type_Epide != "All") {  
+        data <- data[data$Type_Epide == input$Type_Epide, ]  
+      }  
+      if (input$Type_Mole != "All") {  
+        data <- data[data$Type_Mole == input$Type_Mole, ]  
+      }  
+      if (input$Type_CasRep != "All") {  
+        data <- data[data$Type_CasRep == input$Type_CasRep, ]  
+      }  
+      if (input$Type_Review != "All") {  
+        data <- data[data$Type_Review == input$Type_Review, ]  
+      }  
       return(data)  
     })
     # data input
@@ -46,7 +58,7 @@
                   columnDefs = list(     # 设置列的定义  
                     list(visible = FALSE, targets = 0),  # 隐藏第一列（通常是行索引） 
                     list(visible = FALSE, targets = 1),  # 设置第二列的宽度为100像素  
-                    list(width = '350px', targets = 2),  # 设置第二列的宽度为100像素 
+                    list(width = '450px', targets = 2),  # 设置第二列的宽度为100像素 
                     list(width = '150px', targets = 3),  # 设置第二列的宽度为100像素  
                     list(width = '150px', targets = 4),  # 设置第二列的宽度为100像素  
                     list(width = '150px', targets = 5),  # 设置第二列的宽度为100像素  
@@ -219,11 +231,11 @@
     #output$Plot3 <- renderPlot({  
     # ggplot()
     #   })
-     output$Plot3 <- renderPlot({  
-       data <- filteredData()  
-       data <- subset(data, Pub_Affiliation!="NA")
+    output$Plot3p <- renderPlot({  
+      data <- filteredData()  
+      data <- subset(data, Pub_Affiliation!="NA")
       data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
-       group_by(Abc) %>% summarise(Number=n()) %>%
+        group_by(Abc) %>% summarise(Number=n()) %>%
         separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
       data <- subset(data, Number > 3)
       ggplot(data) +  
@@ -231,14 +243,33 @@
         ylab("")+xlab("Number of involved paper (>3)")+
         geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number)),
                  color="black", fill="#605CA8",linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0))+
+        scale_x_continuous(expand = c(0,0),position = "top")+
         theme(legend.position = "none",
               axis.title = element_text(size=14),
               axis.text.y = element_text(size = 12),
               axis.text.x.bottom = element_text(size=12))
     })
+    output$Plot3 <- renderPlot({  
+       data <- filteredData()  
+       data <- subset(data, Pub_Affiliation!="NA")
+      data <- unite(data, Pub_Affiliation,Pub_Affiliation_location, col="Abc",sep="%%%") %>%
+       group_by(Abc) %>% summarise(Number=n()) %>%
+        separate(Abc,into=c("Pub_Affiliation","Pub_Affiliation_location"),sep="%%%")
+      data <- subset(data, Number > 1)
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_col(aes(x = Number,y = reorder(Pub_Affiliation, Number)),
+                 color="black", fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,100,by=5)),
+                           position = "top")+
+        theme(legend.position = "none",
+              axis.title = element_text(size=14),
+              axis.text.y = element_text(size = 14),
+              axis.text.x = element_text(size=14))
+    })
     #Output the plot  
-    output$Plot4 <- renderPlot({  
+    output$Plot4p <- renderPlot({  
       data <- filteredData()  
       data <- subset(data, Pub_Journal!="NA")
       data <- group_by(data, Pub_Journal) %>%
@@ -249,11 +280,29 @@
         ylab("")+xlab("Number of involved paper (>5)")+
         geom_col(aes(x = Number,y = reorder(Pub_Journal, Number)),
                  color="black", fill="#605CA8", linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0))+
+        scale_x_continuous(expand = c(0,0),position = "top")+
         theme(legend.position = "none",
               axis.title = element_text(size=14),
               axis.text.y = element_text(size = 12.0),
               axis.text.x.bottom = element_text(size=12))
+    })
+    output$Plot4 <- renderPlot({  
+      data <- filteredData()  
+      data <- subset(data, Pub_Journal!="NA")
+      data <- group_by(data, Pub_Journal) %>%
+        summarise(Number=n())
+      data <- subset(data, Number > 1)
+      ggplot(data) +  
+        theme_classic() +  
+        ylab("")+xlab("Number of involved paper")+
+        geom_col(aes(x = Number,y = reorder(Pub_Journal, Number)),
+                 color="black", fill="#605CA8", linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,100,by=5)),
+                           position = "top")+
+        theme(legend.position = "none",
+              axis.title = element_text(size=14),
+              axis.text.y = element_text(size = 14.0),
+              axis.text.x = element_text(size=14))
     })
     #Output the plot
     output$Plot5 <- renderPlot({  
@@ -272,14 +321,15 @@
       data <- subset(data, Epi_period>1)
       ggplot(data)+
         geom_segment(aes(
-          x=Epi_during,xend=Epi_during,yend = Epi_Year_end,y=Epi_Year_star,
+          y=Epi_during,yend=Epi_during,xend = Epi_Year_end,x=Epi_Year_star,
           color=Number),linewidth=2.0)+
-        xlab("") +  ylab("Study period") +  
+        ylab("") +  xlab("Study period") +  
         theme_classic()+  
-        scale_y_continuous(breaks = c(seq(1900,2100,by=4)))+
+        scale_x_continuous(breaks = c(seq(1900,2100,by=4)))+
+        scale_y_discrete(position = "right")+
         theme(legend.position = "none",
-              axis.text.x = element_text(angle=90,size=6),
-              axis.text.y = element_text(size=12))
+              axis.text.y = element_text(size=12),
+              axis.text.x = element_text(size=12))
     })
     #Output the plot
     output$Plot6 <- renderPlot({  
@@ -289,15 +339,15 @@
       data <- mutate(data, Epi_period = (Epi_Year_end - Epi_Year_star + 1) )
       data <- group_by(data, Epi_period) %>%
         summarise(Number=n())
-      #data <- subset(data, Epi_period>1)
-      ggplot(data)+
+      data <- subset(data, Epi_period>1)
+      ggplot(data)+#coord_flip()+
         geom_col(aes(Epi_period,Number),
-                 color="black", fill="#9BD5E7", linewidth=0.50,width=0.7)+
+                 color="black", fill="#605CA8", linewidth=0.50,width=0.7)+
         xlab("") +  ylab("Number of involved papers") +  
-        scale_x_continuous(expand = c(0,0),breaks=c(seq(0,100,by=5)))+
+        scale_x_reverse(expand = c(0,0),breaks=c(seq(0,100,by=5)))+
         scale_y_continuous(expand = c(0,0),breaks=c(seq(0,1000,by=10)))+
         theme_classic()+  
-        theme(legend.position = "none",
+        theme(legend.position = c(0.2,0.8),
               axis.text.x = element_text(size=10),
               axis.text.y = element_text(size=12))
     })
@@ -317,13 +367,13 @@
       ggplot(data) +  
         theme_classic() +  
         ylab("")+xlab("Number of involved paper")+
-        geom_col(aes(x = Number,y = reorder(Author, Number),
-                     fill = Author),
-                 color="black",linewidth=0.50,width=0.7) +  
-        scale_x_continuous(expand = c(0,0),breaks = c(seq(0,1000,by=2)))+
+        geom_col(aes(x = Number,y = reorder(Author, Number)),
+                 color="black",fill="#605CA8",linewidth=0.50,width=0.7) +  
+        scale_x_continuous(expand = c(0,0),position = "top",
+                           breaks = c(seq(0,1000,by=2)))+
         theme(legend.position = "none",
               axis.text.y = element_text(size = 12.0),
-              axis.text.x.bottom = element_text(size=10))
+              axis.text.x = element_text(size=12))
     })
     #Output the plot
     output$Plot8 <- renderPlot({  
