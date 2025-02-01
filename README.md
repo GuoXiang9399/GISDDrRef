@@ -19,6 +19,11 @@ install_github('GuoXiang9399/GISDDrRef')
 shiny::runApp('GISDDrRef')
 ```
 
+## Data source
+
+Data update on 2025-02-01
+From 606 journal literatures
+
 ## Dashboard
 
 <img src="Picture/Year_of_publish.png" width="100%" style="display: block; margin: auto;" />
