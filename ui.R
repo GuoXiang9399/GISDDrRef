@@ -193,10 +193,13 @@
                 h4("03 September 2024"),
                 hr(),
                 h3("Contact"),
-                a(href = "https://www.smu.edu.cn/rdyjs/info/1003/1355.htm",
-                  "Xiang Guo  Institutes of Tropical Medicine, Southern Medical University, China",
-                  target = "_blank")
                 
+                a(href = "https://www.smu.edu.cn/rdyjs/info/1003/1355.htm",
+                  "Xiang Guo",
+                  target = "_blank"),
+                h5("School of Public Health, Southern Medical University, China"),
+                h5("School of Basic Medical Science, Henan University, China")
+
         )
       )
     )
