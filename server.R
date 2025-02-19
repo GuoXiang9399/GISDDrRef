@@ -209,10 +209,10 @@
       ggplot(world,aes(long,lat))+theme_void()+coord_equal()+
         geom_map(map=world,aes(map_id=region),
                  fill="gray80", color="gray80",size=0.25)+
-        geom_point(data=data,aes(x=long,y=lat,size=Number),
+        geom_point(data=data,aes(x=long,y=lat,size=log2(Number+1)),
                    alpha=0.99,stroke=0.001,shape=21,
                    color="#605CA8",fill="#605CA8")+
-        scale_size(range = c(2.5, 10))+
+        scale_size(range = c(2.0, 6))+
         theme(plot.background = element_blank(),
               axis.line = element_blank(),
               axis.ticks = element_blank(),
