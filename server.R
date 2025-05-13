@@ -6,7 +6,7 @@
   library(readxl)
   library(dplyr)
   library(tidyr)
-  library(maps)
+  #library(maps)
   library(DT)
   library(ggplot2)
   library(viridis)
