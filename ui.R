@@ -190,13 +190,16 @@
                 h4("GISDDrRef features two interactive dashboards, offering an extensive overview of global and Chinese dengue molecular epidemiological research. Each dashboard has been carefully curated to underscore key findings and trends in the field. With this app, we focus on the intricacies of molecular epidemiology, including fragment measurements conducted in each study, the sequencing platform employed, and the accession numbers of sequences reported. For clinical studies, we have provided a concise summary that captures essential aspects: the demographics of target populations, the sources of clinical data, and the sample sizes involved."),
                 hr(),
                 h3("Last Update"),
-                h4("03 September 2024"),
+                h4("2025-02-17"),
                 hr(),
                 h3("Contact"),
-                a(href = "https://www.smu.edu.cn/rdyjs/info/1003/1355.htm",
-                  "Xiang Guo  Institutes of Tropical Medicine, Southern Medical University, China",
-                  target = "_blank")
                 
+                a(href = "https://www.smu.edu.cn/rdyjs/info/1003/1355.htm",
+                  "Xiang Guo",
+                  target = "_blank"),
+                h5("School of Public Health, Southern Medical University, China"),
+                h5("School of Basic Medical Science, Henan University, China")
+
         )
       )
     )

@@ -2,7 +2,7 @@
 
 
 
-<img src="Figure/Dashborad.png" width="100%" style="display: block; margin: auto;" />
+<img src="Picture/Dashboard.png" width="100%" style="display: block; margin: auto;" />
 
 
 ## Installation
@@ -19,7 +19,24 @@ install_github('GuoXiang9399/GISDDrRef')
 shiny::runApp('GISDDrRef')
 ```
 
+## Data source
 
+Data update on 2025-02-01
+From 606 journal literatures
+
+## Dashboard
+
+<img src="Picture/Year_of_publish.png" width="100%" style="display: block; margin: auto;" />
+
+<img src="Picture/TOP_affiliations.png" width="100%" style="display: block; margin: auto;" />
+
+<img src="Picture/TOP_journals.png" width="100%" style="display: block; margin: auto;" />
+
+## Dashboard for China
+
+<img src="Picture/CN_province.png" width="100%" style="display: block; margin: auto;" />
+
+<img src="Picture/CN_cityarea.png" width="100%" style="display: block; margin: auto;" />
 
 
 ## Contributing
