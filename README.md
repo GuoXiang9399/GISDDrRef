@@ -7,7 +7,7 @@
 
 ## Installation
 
-Dependency:  r-package: shiny, shinydashboard, readxl, dplyr, tidyr, maps,DT, ggplot2, viridis
+Dependency:  r-package: shiny, shinydashboard, readxl, dplyr, tidyr, maps,DT, ggplot2, viridis.
 
 ```
 library(devtools)
